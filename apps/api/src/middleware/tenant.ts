@@ -13,12 +13,12 @@ export function requireBusinessAccess(
     (req.query && typeof req.query.businessId === "string" ? req.query.businessId : undefined);
 
   if (!businessId) {
-    return next(new ForbiddenError("Missing businessId."));
+    return next(ForbiddenError("Missing businessId"));
   }
 
   const membership = req as AuthRequest & { membership?: { businessId: string; role: BusinessRole } };
   if (!membership.membership || membership.membership.businessId !== businessId) {
-    return next(new ForbiddenError("You do not have access to this business."));
+    return next(ForbiddenError("You do not have access to this business"));
   }
 
   (req as AuthRequest).membership = membership.membership;

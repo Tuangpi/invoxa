@@ -28,7 +28,7 @@ export const createUser = async (data: { name: string; email: string; passwordHa
 export const assertUserExists = async (id: string) => {
   const user = await findByUserId(id);
   if (!user) {
-    throw new NotFoundError("User not found.");
+    throw NotFoundError("User not found.");
   }
   return user;
 };

@@ -1,5 +1,12 @@
 import { Request, Response } from "express";
-import { loginUser, refreshAccessToken, getMe } from "./auth.service";
+import {
+  loginUser,
+  refreshAccessToken,
+  getMe,
+  registerUser,
+  signAccessToken,
+  signRefreshToken,
+} from "./auth.service";
 import { sendResponse } from "../../utils/response";
 
 export async function login(req: Request, res: Response) {
@@ -19,13 +26,8 @@ export async function me(req: Request, res: Response) {
 
 export async function register(req: Request, res: Response) {
   const { name, email, password } = req.body;
-  const { user, accessToken, refreshToken } = await registerUser(email, password);
-  sendResponse(res, 201, { user, accessToken, refreshToken });
-}
-
-
-export async function register(req: Request, res: Response) {
-  const { name, email, password } = req.body;
-  const { user, accessToken, refreshToken } = await registerUser(email, password);
-  sendResponse(res, 201, { user, accessToken, refreshToken });
+  const { id, name: userName, email: userEmail } = await registerUser({ name, email, password });
+  const accessToken = signAccessToken({ id, email: userEmail, name: userName });
+  const refreshToken = signRefreshToken({ id });
+  sendResponse(res, 201, { user: { id, name: userName, email: userEmail }, accessToken, refreshToken });
 }

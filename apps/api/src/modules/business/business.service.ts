@@ -68,12 +68,12 @@ export async function addMember(req: any, res: any, next: any) {
     const business = await assertBusinessExists(req.params.businessId);
 
     if (req.membership!.role !== "OWNER" && req.membership!.role !== "ADMIN") {
-      throw new ForbiddenError("Only owners and admins can invite members.");
+      throw ForbiddenError("Only owners and admins can invite members.");
     }
 
     const existing = await findMemberByUserId(req.params.businessId, userId);
     if (existing) {
-      throw new ConflictError("User is already a member of this business.");
+      throw ConflictError("User is already a member of this business.");
     }
 
     const member = await createMember({ businessId: business.id, userId, role });
@@ -89,7 +89,7 @@ export async function updateMember(req: any, res: any, next: any) {
     await assertMemberExists(req.params.businessId, req.params.memberId);
 
     if (req.membership!.role !== "OWNER" && req.membership!.role !== "ADMIN") {
-      throw new ForbiddenError("Only owners and admins can change member roles.");
+      throw ForbiddenError("Only owners and admins can change member roles.");
     }
 
     const member = await updateMemberRole(req.params.businessId, req.params.memberId, role);

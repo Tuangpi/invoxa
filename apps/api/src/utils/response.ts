@@ -8,6 +8,7 @@ export const sendResponse = <T>(
   data: T,
 ): Response => {
   res.status(statusCode).json({ success: true, data });
+  return res.status(statusCode).json({ success: true, data });
 };
 
 export const sendNoContent = (res: Response): void => {

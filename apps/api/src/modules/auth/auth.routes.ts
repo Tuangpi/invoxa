@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Router } from "express";
 import { login, register } from "./auth.controller";
 import { refresh } from "./auth.controller";

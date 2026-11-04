@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { AppError, NotFoundError } from "../utils/errors";
 
 export const notFoundHandler = (_req: Request, res: Response, next: NextFunction) => {
-  next(new NotFoundError("Route not found"));
+  next(NotFoundError("Route not found"));
 };
 
 export const errorHandler = (
