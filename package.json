@@ -1,0 +1,22 @@
+{
+  "name": "invoxa",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace apps/api",
+    "build:api": "npm run build --workspace apps/api",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "prisma:validate": "npx prisma validate",
+    "prisma:format": "npx prisma format"
+  },
+  "devDependencies": {
+    "prisma": "^6.0.0",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
