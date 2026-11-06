@@ -1,6 +1,19 @@
 // @ts-nocheck
-import prisma from "@prisma/client";
-import { NotFoundError, AppError } from "../../utils/errors";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient({
+  log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+});
+
+export const getPrisma = () => {
+  if (global.__prisma) return global.__prisma;
+  return prisma;
+};
+
+if (process.env.NODE_ENV !== "production") {
+  global.__prisma = prisma;
+}
+
 
 export const findByBusinessId = async (id: string) => {
   return prisma.business.findUnique({ where: { id } });
